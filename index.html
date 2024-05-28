@@ -22,6 +22,18 @@
       err.addEventListener('click',()=>{
         throw new Error(`ErrorMessage:${msg.value}`)
       })
+
+      if (typeof newrelic !== 'undefined') {
+        try {
+          // Code that throws an error
+          throw new Error('Manual error reporting to New Relic')
+        } catch (err) {
+          // Report the caught error to New Relic
+          newrelic.noticeError(err)
+        }
+      } else {
+        console.warn('New Relic agent is not loaded.')
+      }
     </script>
   </body>
 </html>
